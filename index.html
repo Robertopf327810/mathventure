@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MathVenture - Matemáticas Divertidas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app-container">
+
+    <!-- 1. VISTA DE AUTENTICACIÓN -->
+    <section id="view-auth" class="view active">
+      <div class="card" style="margin-top: auto; margin-bottom: auto;">
+        <div class="auth-header">
+          <h1>MathVenture</h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Entrena tus habilidades de matemáticas para 6.° de primaria</p>
+        </div>
+
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-login" onclick="setAuthMode('login')">Ingresar</div>
+          <div class="auth-tab" id="tab-register" onclick="setAuthMode('register')">Registrarse</div>
+        </div>
+
+        <form id="auth-form" onsubmit="handleAuth(event)">
+          <div class="form-group">
+            <label for="auth-username">Usuario</label>
+            <input type="text" id="auth-username" required placeholder="Ingresa tu usuario" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="auth-password">Contraseña</label>
+            <input type="password" id="auth-password" required placeholder="Ingresa tu clave" />
+          </div>
+          <button type="submit" class="btn btn-primary" id="auth-submit-btn" style="margin-top: 8px;">Comenzar</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 2. VISTA DE MAPA / SELECCIÓN DE TEMAS -->
+    <section id="view-map" class="view">
+      <div class="top-bar">
+        <div class="user-info">Hola, <span id="map-username" style="color: var(--primary);">Estudiante</span></div>
+        <button class="btn btn-secondary" style="width: auto; padding: 6px 12px; font-size: 0.85rem;" onclick="logout()">Salir</button>
+      </div>
+
+      <div class="card" style="margin-bottom: 16px; text-align: center;">
+        <h2 style="font-size: 1.25rem; margin-bottom: 4px;">Ruta de Aprendizaje</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Selecciona una temática (20 preguntas)</p>
+      </div>
+
+      <div class="map-container">
+        <!-- Círculo 1: Sumas -->
+        <div class="node-wrapper">
+          <button class="node-btn node-sumas" onclick="startTopic('sumas')">➕</button>
+          <span class="node-title">Sumas</span>
+          <span class="node-score" id="score-sumas">Sin completar</span>
+        </div>
+
+        <!-- Círculo 2: Restas -->
+        <div class="node-wrapper">
+          <button class="node-btn node-restas" onclick="startTopic('restas')">➖</button>
+          <span class="node-title">Restas</span>
+          <span class="node-score" id="score-restas">Sin completar</span>
+        </div>
+
+        <!-- Círculo 3: Multiplicaciones -->
+        <div class="node-wrapper">
+          <button class="node-btn node-multiplicaciones" onclick="startTopic('multiplicaciones')">✖️</button>
+          <span class="node-title">Multiplicaciones</span>
+          <span class="node-score" id="score-multiplicaciones">Sin completar</span>
+        </div>
+
+        <!-- Círculo 4: Divisiones -->
+        <div class="node-wrapper">
+          <button class="node-btn node-divisiones" onclick="startTopic('divisiones')">➗</button>
+          <span class="node-title">Divisiones</span>
+          <span class="node-score" id="score-divisiones">Sin completar</span>
+        </div>
+
+        <!-- Círculo 5: Problemas Cortos -->
+        <div class="node-wrapper">
+          <button class="node-btn node-problemas" onclick="startTopic('problemas')">💡</button>
+          <span class="node-title">Problemas Cortos</span>
+          <span class="node-score" id="score-problemas">Sin completar</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. VISTA DE PREGUNTAS (QUIZ) -->
+    <section id="view-quiz" class="view">
+      <div class="top-bar">
+        <button class="btn btn-secondary" style="width: auto; padding: 6px 12px; font-size: 0.85rem;" onclick="confirmExit()">✕ Salir</button>
+        <div class="lives-counter" id="quiz-lives">❤️❤️❤️</div>
+      </div>
+
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+
+      <div class="quiz-step-info" id="quiz-step-counter">Pregunta 1 de 20</div>
+
+      <div class="card quiz-question-box">
+        <div class="quiz-question-text" id="quiz-question-text">¿Cuánto es...?</div>
+      </div>
+
+      <div class="options-grid" id="quiz-options-container">
+        <!-- Botones inyectados por JavaScript -->
+      </div>
+
+      <!-- Barra de retroalimentación inmediata -->
+      <div class="feedback-tray" id="feedback-tray">
+        <div class="feedback-title" id="feedback-title">¡Excelente!</div>
+        <div id="feedback-explanation" style="font-size: 0.95rem;">Respuesta correcta.</div>
+        <button class="btn btn-primary" id="feedback-next-btn" onclick="nextQuestion()">Continuar</button>
+      </div>
+    </section>
+
+    <!-- 4. VISTA DE RESULTADOS (PUNTAJE FINAL) -->
+    <section id="view-summary" class="view">
+      <div class="card summary-card">
+        <div class="summary-icon" id="summary-icon">🏆</div>
+        <h2 id="summary-title" style="font-size: 1.6rem;">¡Módulo Terminado!</h2>
+        <p id="summary-subtitle" style="color: var(--text-muted); font-size: 0.95rem;">Has demostrado tus conocimientos matemáticos.</p>
+
+        <div class="metric-row">
+          <div class="metric-item">
+            <span class="metric-value" id="summary-correct">0 / 20</span>
+            <span class="metric-label">Aciertos</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-value" id="summary-pct">0%</span>
+            <span class="metric-label">Porcentaje</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-value" id="summary-points">0</span>
+            <span class="metric-label">Puntos</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="restartCurrentTopic()">Volver a Jugar</button>
+        <button class="btn btn-secondary" onclick="goToMap()" style="margin-top: 8px;">Volver al Menú</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
