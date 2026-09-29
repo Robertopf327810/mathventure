@@ -14,8 +14,9 @@
     <section id="view-auth" class="view active">
       <div class="card" style="margin-top: auto; margin-bottom: auto;">
         <div class="auth-header">
+          <div class="logo-badge">📐</div>
           <h1>MathVenture</h1>
-          <p style="color: var(--text-muted); font-size: 0.95rem;">Entrena tus habilidades de matemáticas para 6.° de primaria</p>
+          <p>Entrena tus habilidades de matemáticas para 6.° de primaria</p>
         </div>
 
         <div class="auth-tabs">
@@ -26,13 +27,19 @@
         <form id="auth-form" onsubmit="handleAuth(event)">
           <div class="form-group">
             <label for="auth-username">Usuario</label>
-            <input type="text" id="auth-username" required placeholder="Ingresa tu usuario" autocomplete="off" />
+            <div class="input-container">
+              <span class="input-icon">👤</span>
+              <input type="text" id="auth-username" required placeholder="Tu nombre o apodo" autocomplete="off" />
+            </div>
           </div>
           <div class="form-group">
             <label for="auth-password">Contraseña</label>
-            <input type="password" id="auth-password" required placeholder="Ingresa tu clave" />
+            <div class="input-container">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="auth-password" required placeholder="Tu contraseña secreta" />
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary" id="auth-submit-btn" style="margin-top: 8px;">Comenzar</button>
+          <button type="submit" class="btn btn-primary" id="auth-submit-btn" style="margin-top: 10px;">¡Comenzar Aventura!</button>
         </form>
       </div>
     </section>
@@ -40,13 +47,13 @@
     <!-- 2. VISTA DE MAPA / SELECCIÓN DE TEMAS -->
     <section id="view-map" class="view">
       <div class="top-bar">
-        <div class="user-info">Hola, <span id="map-username" style="color: var(--primary);">Estudiante</span></div>
-        <button class="btn btn-secondary" style="width: auto; padding: 6px 12px; font-size: 0.85rem;" onclick="logout()">Salir</button>
+        <div class="user-info">Hola, <span id="map-username" style="color: #4338ca;">Estudiante</span> 👋</div>
+        <button class="btn btn-secondary" style="width: auto; padding: 8px 16px; font-size: 0.85rem;" onclick="logout()">Salir</button>
       </div>
 
-      <div class="card" style="margin-bottom: 16px; text-align: center;">
-        <h2 style="font-size: 1.25rem; margin-bottom: 4px;">Ruta de Aprendizaje</h2>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">Selecciona una temática (20 preguntas)</p>
+      <div class="card" style="margin-bottom: 12px; text-align: center; padding: 18px;">
+        <h2 style="font-size: 1.35rem; font-weight: 900; color: #1e1b4b; margin-bottom: 2px;">Ruta de Módulos</h2>
+        <p style="font-size: 0.95rem; color: #64748b; font-weight: 700;">Selecciona una esfera para jugar (20 preguntas)</p>
       </div>
 
       <div class="map-container">
@@ -90,7 +97,7 @@
     <!-- 3. VISTA DE PREGUNTAS (QUIZ) -->
     <section id="view-quiz" class="view">
       <div class="top-bar">
-        <button class="btn btn-secondary" style="width: auto; padding: 6px 12px; font-size: 0.85rem;" onclick="confirmExit()">✕ Salir</button>
+        <button class="btn btn-secondary" style="width: auto; padding: 6px 14px; font-size: 0.9rem;" onclick="confirmExit()">✕ Salir</button>
         <div class="lives-counter" id="quiz-lives">❤️❤️❤️</div>
       </div>
 
@@ -104,14 +111,12 @@
         <div class="quiz-question-text" id="quiz-question-text">¿Cuánto es...?</div>
       </div>
 
-      <div class="options-grid" id="quiz-options-container">
-        <!-- Botones inyectados por JavaScript -->
-      </div>
+      <div class="options-grid" id="quiz-options-container"></div>
 
-      <!-- Barra de retroalimentación inmediata -->
+      <!-- Feedback Banner Inferior -->
       <div class="feedback-tray" id="feedback-tray">
         <div class="feedback-title" id="feedback-title">¡Excelente!</div>
-        <div id="feedback-explanation" style="font-size: 0.95rem;">Respuesta correcta.</div>
+        <div id="feedback-explanation" style="font-size: 1rem; font-weight: 700;">Respuesta correcta.</div>
         <button class="btn btn-primary" id="feedback-next-btn" onclick="nextQuestion()">Continuar</button>
       </div>
     </section>
@@ -120,8 +125,8 @@
     <section id="view-summary" class="view">
       <div class="card summary-card">
         <div class="summary-icon" id="summary-icon">🏆</div>
-        <h2 id="summary-title" style="font-size: 1.6rem;">¡Módulo Terminado!</h2>
-        <p id="summary-subtitle" style="color: var(--text-muted); font-size: 0.95rem;">Has demostrado tus conocimientos matemáticos.</p>
+        <h2 id="summary-title" style="font-size: 1.8rem; font-weight: 900; color: #1e1b4b;">¡Módulo Terminado!</h2>
+        <p id="summary-subtitle" style="color: var(--text-muted); font-size: 1rem; font-weight: 700;">Has demostrado tus conocimientos matemáticos.</p>
 
         <div class="metric-row">
           <div class="metric-item">
@@ -139,7 +144,7 @@
         </div>
 
         <button class="btn btn-primary" onclick="restartCurrentTopic()">Volver a Jugar</button>
-        <button class="btn btn-secondary" onclick="goToMap()" style="margin-top: 8px;">Volver al Menú</button>
+        <button class="btn btn-secondary" onclick="goToMap()" style="margin-top: 10px;">Volver al Menú</button>
       </div>
     </section>
 
