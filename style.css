@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
 :root {
+  /* Paleta Gamificada */
   --duo-green: #58cc02;
   --duo-green-border: #46a302;
   --duo-blue: #1cb0f6;
@@ -34,7 +35,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Fondo de símbolos flotantes */
+/* Patrón de fondo con símbolos matemáticos */
 body::before {
   content: "➕ ➗ ✖️ ➖ 🧮 📐 💡 ➕ ➗ ✖️ ➖";
   position: fixed;
@@ -60,7 +61,7 @@ body::before {
   z-index: 1;
 }
 
-/* Control de transiciones de vistas */
+/* Transición fluida entre pantallas */
 .view {
   display: none;
   flex-direction: column;
@@ -77,7 +78,7 @@ body::before {
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Tarjeta principal con borde 3D */
+/* Tarjeta flotante con relieve 3D */
 .card {
   background: #ffffff;
   border-radius: 28px;
@@ -87,6 +88,7 @@ body::before {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
+/* Cabecera y Mascota/Insignia */
 .auth-header {
   text-align: center;
   margin-bottom: 22px;
@@ -128,7 +130,7 @@ body::before {
   margin-top: 4px;
 }
 
-/* Pestañas */
+/* Pestañas de Login / Registro */
 .auth-tabs {
   display: flex;
   background: #f1f3f4;
@@ -158,7 +160,7 @@ body::before {
   box-shadow: 0 3px 0 #d8dce2;
 }
 
-/* Campos de entrada */
+/* Campos de Formulario */
 .form-group {
   margin-bottom: 16px;
 }
@@ -206,7 +208,7 @@ body::before {
   border-bottom-color: #1899d6;
 }
 
-/* Botones 3D */
+/* Botones Chunky 3D */
 .btn {
   display: inline-block;
   width: 100%;
@@ -246,7 +248,7 @@ body::before {
   box-shadow: none;
 }
 
-/* Barra superior */
+/* Barra Superior */
 .top-bar {
   display: flex;
   align-items: center;
@@ -273,75 +275,134 @@ body::before {
   gap: 4px;
 }
 
-/* Ruta de módulos estilo Zig-Zag */
+/* =========================================================================
+   MAPA DE RUTA ESTILO DUOLINGO (CON CAMINO Y ZIG-ZAG)
+   ========================================================================= */
 .map-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 34px;
-  padding: 20px 0 60px 0;
+  gap: 48px;
+  padding: 30px 0 80px 0;
+  position: relative;
+  width: 100%;
+}
+
+/* Línea punteada vertical que simula el camino */
+.map-container::before {
+  content: "";
+  position: absolute;
+  top: 50px;
+  bottom: 80px;
+  width: 8px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.4) 0px,
+    rgba(255, 255, 255, 0.4) 14px,
+    transparent 14px,
+    transparent 24px
+  );
+  border-radius: 4px;
+  z-index: 0;
 }
 
 .node-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.2s ease;
 }
 
+/* Trayectoria sinuosa en zig-zag */
 .node-wrapper:nth-child(1) { transform: translateX(0); }
-.node-wrapper:nth-child(2) { transform: translateX(-60px); }
-.node-wrapper:nth-child(3) { transform: translateX(60px); }
-.node-wrapper:nth-child(4) { transform: translateX(-40px); }
+.node-wrapper:nth-child(2) { transform: translateX(-65px); }
+.node-wrapper:nth-child(3) { transform: translateX(65px); }
+.node-wrapper:nth-child(4) { transform: translateX(-50px); }
 .node-wrapper:nth-child(5) { transform: translateX(0); }
 
+/* Esferas de nivel */
 .node-btn {
-  width: 96px;
-  height: 96px;
+  width: 92px;
+  height: 92px;
   border-radius: 50%;
-  border: none;
+  border: 4px solid #ffffff;
   cursor: pointer;
-  font-size: 2.7rem;
+  font-size: 2.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
+  outline: none;
+  color: #ffffff !important;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
 }
 
 .node-btn:hover {
-  filter: brightness(1.06);
+  filter: brightness(1.08);
+  transform: scale(1.04);
 }
 
 .node-btn:active {
-  transform: translateY(8px);
+  transform: translateY(8px) scale(0.98);
 }
 
-.node-btn::after {
+/* Reflejo de brillo superior */
+.node-btn::before {
   content: "";
   position: absolute;
-  top: -6px;
-  left: -6px;
-  right: -6px;
-  bottom: -6px;
+  top: 8px;
+  left: 18px;
+  width: 32px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.35);
   border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.45);
+  transform: rotate(-25deg);
   pointer-events: none;
 }
 
-.node-sumas { background: var(--duo-blue); box-shadow: 0 10px 0 var(--duo-blue-border); }
-.node-sumas:active { box-shadow: 0 2px 0 var(--duo-blue-border); }
+/* Colores y relieves por temática */
+.node-sumas {
+  background: #1cb0f6 !important;
+  box-shadow: 0 10px 0 #1899d6, 0 16px 20px rgba(28, 176, 246, 0.35) !important;
+}
+.node-sumas:active {
+  box-shadow: 0 2px 0 #1899d6 !important;
+}
 
-.node-restas { background: var(--duo-green); box-shadow: 0 10px 0 var(--duo-green-border); }
-.node-restas:active { box-shadow: 0 2px 0 var(--duo-green-border); }
+.node-restas {
+  background: #58cc02 !important;
+  box-shadow: 0 10px 0 #46a302, 0 16px 20px rgba(88, 204, 2, 0.35) !important;
+}
+.node-restas:active {
+  box-shadow: 0 2px 0 #46a302 !important;
+}
 
-.node-multiplicaciones { background: var(--duo-yellow); box-shadow: 0 10px 0 var(--duo-yellow-border); }
-.node-multiplicaciones:active { box-shadow: 0 2px 0 var(--duo-yellow-border); }
+.node-multiplicaciones {
+  background: #ff9600 !important;
+  box-shadow: 0 10px 0 #e68500, 0 16px 20px rgba(255, 150, 0, 0.35) !important;
+}
+.node-multiplicaciones:active {
+  box-shadow: 0 2px 0 #e68500 !important;
+}
 
-.node-divisiones { background: var(--duo-purple); box-shadow: 0 10px 0 var(--duo-purple-border); }
-.node-divisiones:active { box-shadow: 0 2px 0 var(--duo-purple-border); }
+.node-divisiones {
+  background: #ce82ff !important;
+  box-shadow: 0 10px 0 #a855f7, 0 16px 20px rgba(206, 130, 255, 0.35) !important;
+}
+.node-divisiones:active {
+  box-shadow: 0 2px 0 #a855f7 !important;
+}
 
-.node-problemas { background: var(--duo-rose); box-shadow: 0 10px 0 var(--duo-rose-border); }
-.node-problemas:active { box-shadow: 0 2px 0 var(--duo-rose-border); }
+.node-problemas {
+  background: #ff4b4b !important;
+  box-shadow: 0 10px 0 #ea2b2b, 0 16px 20px rgba(255, 75, 75, 0.35) !important;
+}
+.node-problemas:active {
+  box-shadow: 0 2px 0 #ea2b2b !important;
+}
 
 .node-title {
   margin-top: 10px;
@@ -354,16 +415,17 @@ body::before {
 .node-score {
   font-size: 0.8rem;
   background: #ffffff;
+  border: 1px solid #cbd5e1;
   padding: 3px 12px;
   border-radius: 12px;
   color: #2b3882;
   font-weight: 800;
   margin-top: 4px;
-  border: 2px solid #e5e5e5;
-  border-bottom: 3px solid #d5d9de;
 }
 
-/* Barra de progreso y opciones */
+/* =========================================================================
+   PANTALLA DE PREGUNTAS (QUIZ)
+   ========================================================================= */
 .quiz-progress-bar {
   width: 100%;
   height: 20px;
@@ -444,7 +506,7 @@ body::before {
   border-bottom-width: 2px;
 }
 
-/* Bandeja inferior de acierto/error */
+/* Bandeja Inferior de Acierto / Error */
 .feedback-tray {
   margin-top: auto;
   padding: 20px;
@@ -481,7 +543,9 @@ body::before {
   font-weight: 900;
 }
 
-/* Fin del juego */
+/* =========================================================================
+   PANTALLA DE RESUMEN FINAL
+   ========================================================================= */
 .summary-card {
   text-align: center;
   display: flex;
